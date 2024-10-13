@@ -107,8 +107,8 @@ public class SocialMediaController {
     private void updateMessageByIDHandler(Context ctx) throws SQLException, JsonMappingException, JsonProcessingException {
         ObjectMapper om = new ObjectMapper();
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
-        Message tempMsg = om.readValue(ctx.body(), Message.class);
-        Message msg = messageService.updateMessageByID(message_id, tempMsg.getMessage_text());
+        String message_text = om.readValue(ctx.body(), Message.class).getMessage_text();
+        Message msg = messageService.updateMessageByID(message_id, message_text);
         if(msg != null) {
             ctx.json(msg);
         } else {

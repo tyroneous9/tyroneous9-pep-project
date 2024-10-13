@@ -40,8 +40,14 @@ public class MessageService {
         return msg;
     }
 
-    public Message updateMessageByID(int message_id, String message_text) throws SQLException {
-        return messageDAO.updateMessageByID(message_id, message_text);
+    public Message updateMessageByID(int message_id, String message_text) throws SQLException { 
+        if(!message_text.isEmpty() &&
+            message_text.length() < 255)
+        {
+            messageDAO.updateMessageByID(message_id, message_text);
+            return messageDAO.getMessageByID(message_id);
+        }
+        return null;
     }
 
     public List<Message> getUserMessages(int account_id) throws SQLException {
